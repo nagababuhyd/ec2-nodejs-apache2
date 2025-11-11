@@ -25,5 +25,6 @@ pm2 stop all
 pm2 start my-app
 
 pm2 logs
+curl localhost:3000
 
-  clear
+enable port 22 80 3000 in security groups

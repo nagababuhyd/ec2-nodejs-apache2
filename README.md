@@ -72,7 +72,6 @@ sudo systemctl enable apache2
     CustomLog ${APACHE_LOG_DIR}/myapp-access.log combined
 </VirtualHost>
 
-
 sudo a2enmod proxy
 sudo a2enmod proxy_http
 sudo a2enmod headers

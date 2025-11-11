@@ -20,6 +20,7 @@ setup ec2
 git clone https://github.com/nagababuhyd/ec2-nodejs-apache2/
 cd ec2-nodejs-apache2
 sudo apt update && sudo apt upgrade -y
+
 # Install curl if missing
 sudo apt install -y curl
 
@@ -48,9 +49,44 @@ enable port 22 80 3000 in security groups
 ################
 
 
-install apache web server for multiple req acts as proxy and load balancer for nodejs app
-access app with public ip
-working with ec2 ip
+## install apache web server for multiple req acts as proxy and load balancer for nodejs app
+sudo apt update
+sudo apt install -y apache2
+sudo systemctl status apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
+
+      
+      sudo nano /etc/apache2/sites-available/myapp.conf
+<VirtualHost *:80>
+    ServerName myapp.example.com
+    ServerAdmin webmaster@localhost
+
+    # Reverse proxy to Node.js app
+    ProxyPreserveHost On
+    ProxyRequests Off
+    ProxyPass / http://127.0.0.1:3000/
+    ProxyPassReverse / http://127.0.0.1:3000/
+
+    ErrorLog ${APACHE_LOG_DIR}/myapp-error.log
+    CustomLog ${APACHE_LOG_DIR}/myapp-access.log combined
+</VirtualHost>
+
+
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod headers
+sudo a2enmod rewrite
+
+sudo a2ensite myapp.conf
+sudo a2dissite 000-default.conf
+sudo apache2ctl configtest
+sudo systemctl reload apache2
+sudo systemctl restart apache2
+
+ http://<your-server-ip>
+
+
 ######################
 
 🧩 2️⃣ Create Target Group (in AWS EC2 Console)

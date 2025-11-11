@@ -19,7 +19,11 @@ npm -v
 
 npm install -g pm2
 pm2 start ecosystem.config.js
-   26  pm2 stop all
-   27  pm2 start my-app
-   28  pm2 logs
-   29  clear
+
+pm2 stop all
+
+pm2 start my-app
+
+pm2 logs
+
+  clear
